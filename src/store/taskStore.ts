@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
 export interface Task {
   _id: string;
@@ -32,34 +33,42 @@ interface TaskState {
   setError: (e: string | null) => void;
 }
 
-export const useTaskStore = create<TaskState>((set) => ({
-  tasks: [],
-  isLoading: false,
-  error: null,
+export const useTaskStore = create<TaskState>()(
+  persist(
+    (set) => ({
+      tasks: [],
+      isLoading: false,
+      error: null,
 
-  setTasks: (tasks) => set({ tasks }),
+      setTasks: (tasks) => set({ tasks }),
 
-  addTask: (task) => set((s) => ({ tasks: [task, ...s.tasks] })),
+      addTask: (task) => set((s) => ({ tasks: [task, ...s.tasks] })),
 
-  updateTask: (id, updates) =>
-    set((s) => ({
-      tasks: s.tasks.map((t) =>
-        (t._id === id || t.id === id) ? { ...t, ...updates } : t
-      ),
-    })),
+      updateTask: (id, updates) =>
+        set((s) => ({
+          tasks: s.tasks.map((t) =>
+            (t._id === id || t.id === id) ? { ...t, ...updates } : t
+          ),
+        })),
 
-  deleteTask: (id) =>
-    set((s) => ({
-      tasks: s.tasks.filter((t) => t._id !== id && t.id !== id),
-    })),
+      deleteTask: (id) =>
+        set((s) => ({
+          tasks: s.tasks.filter((t) => t._id !== id && t.id !== id),
+        })),
 
-  moveTask: (id, newStatus) =>
-    set((s) => ({
-      tasks: s.tasks.map((t) =>
-        (t._id === id || t.id === id) ? { ...t, status: newStatus } : t
-      ),
-    })),
+      moveTask: (id, newStatus) =>
+        set((s) => ({
+          tasks: s.tasks.map((t) =>
+            (t._id === id || t.id === id) ? { ...t, status: newStatus } : t
+          ),
+        })),
 
-  setLoading: (v) => set({ isLoading: v }),
-  setError: (e) => set({ error: e }),
-}));
+      setLoading: (v) => set({ isLoading: v }),
+      setError: (e) => set({ error: e }),
+    }),
+    {
+      name: "taskpulse-tasks-storage", // name of item in the storage (must be unique)
+      partialize: (state) => ({ tasks: state.tasks }), // Only persist tasks
+    }
+  )
+);

@@ -284,6 +284,7 @@ function EditTaskForm({ task, onClose }: { task: Task; onClose: () => void }) {
     title: task.title,
     description: task.description || "",
     priority: task.priority,
+    status: task.status,
     dueDate: task.dueDate ? task.dueDate.split("T")[0] : "",
   });
   const [saving, setSaving] = useState(false);
@@ -315,6 +316,15 @@ function EditTaskForm({ task, onClose }: { task: Task; onClose: () => void }) {
       </div>
       <div className="grid grid-cols-2 gap-4">
         <div className="flex flex-col gap-1.5">
+          <label className="text-xs font-medium text-text-secondary uppercase tracking-wider">Status</label>
+          <select value={form.status} onChange={(e) => setForm(f => ({ ...f, status: e.target.value as any }))}>
+            <option value="Todo">Todo</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Review">Review</option>
+            <option value="Completed">Completed</option>
+          </select>
+        </div>
+        <div className="flex flex-col gap-1.5">
           <label className="text-xs font-medium text-text-secondary uppercase tracking-wider">Priority</label>
           <select value={form.priority} onChange={(e) => setForm(f => ({ ...f, priority: e.target.value as any }))}>
             <option value="High">High</option>
@@ -322,6 +332,8 @@ function EditTaskForm({ task, onClose }: { task: Task; onClose: () => void }) {
             <option value="Low">Low</option>
           </select>
         </div>
+      </div>
+      <div className="grid grid-cols-1 gap-4">
         <Input label="Due Date" type="date" value={form.dueDate} onChange={(e) => setForm(f => ({ ...f, dueDate: e.target.value }))} />
       </div>
       <div className="flex gap-3 pt-2">
