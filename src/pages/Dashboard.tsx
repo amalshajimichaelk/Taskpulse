@@ -25,6 +25,13 @@ const weeklyData = [
   { name: "Sun", score: 80, tasks: 10 },
 ];
 
+const monthlyData = [
+  { name: "Week 1", score: 65, tasks: 35 },
+  { name: "Week 2", score: 78, tasks: 42 },
+  { name: "Week 3", score: 55, tasks: 28 },
+  { name: "Week 4", score: 82, tasks: 48 },
+];
+
 const teamMembers = [
   { name: "Elena Rostova", role: "UI/UX Designer", status: "online" as const, tasks: 24, completion: 87 },
   { name: "Marcus Chen", role: "Backend Engineer", status: "online" as const, tasks: 18, completion: 73 },
@@ -56,6 +63,7 @@ const CustomTooltip = ({ active, payload, label }: any) => {
 
 export function Dashboard() {
   const [loading, setLoading] = useState(true);
+  const [timeframe, setTimeframe] = useState<"week" | "month">("week");
   const [stats, setStats] = useState({ total: 128, completed: 84, inProgress: 32, todo: 12, productivityScore: 92 });
   const { success } = useToast();
 
@@ -70,7 +78,7 @@ export function Dashboard() {
     const exportData = {
       generatedAt: new Date().toISOString(),
       stats,
-      weeklyData,
+      chartData: timeframe === 'week' ? weeklyData : monthlyData,
       teamMembers,
       upcomingDeadlines
     };
@@ -133,8 +141,10 @@ export function Dashboard() {
           <p className="text-sm text-text-secondary">Real-time performance metrics for Q3 2026</p>
         </div>
         <div className="flex gap-2">
-          <button className="px-4 py-2 rounded-xl bg-surface border border-white/10 text-sm text-text-secondary hover:text-text-primary transition-colors flex items-center gap-2">
-            <CalendarDays size={15} /> Last 30 Days
+          <button 
+            onClick={() => setTimeframe(t => t === 'week' ? 'month' : 'week')}
+            className="px-4 py-2 rounded-xl bg-surface border border-white/10 text-sm text-text-secondary hover:text-text-primary transition-colors flex items-center gap-2">
+            <CalendarDays size={15} /> {timeframe === 'week' ? 'Last 30 Days' : 'Last 7 Days'}
           </button>
           <button onClick={handleExport} className="px-4 py-2 rounded-xl gradient-primary text-white text-sm font-semibold hover:opacity-90 transition-opacity shadow-[0_0_20px_rgba(99,102,241,0.3)] flex items-center gap-2">
             <ArrowUpRight size={15} /> Export
@@ -184,14 +194,14 @@ export function Dashboard() {
         >
           <div className="flex justify-between items-center mb-6">
             <div>
-              <h3 className="section-title">Weekly Productivity</h3>
-              <p className="text-xs text-text-secondary mt-0.5">Task completion trend this week</p>
+              <h3 className="section-title">{timeframe === 'week' ? 'Weekly' : 'Monthly'} Productivity</h3>
+              <p className="text-xs text-text-secondary mt-0.5">Task completion trend this {timeframe === 'week' ? 'week' : 'month'}</p>
             </div>
             <button className="text-text-secondary hover:text-text-primary transition-colors"><MoreHorizontal size={18} /></button>
           </div>
           <div className="h-64 w-full">
             <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={weeklyData} margin={{ top: 4, right: 4, left: -20, bottom: 0 }}>
+              <AreaChart data={timeframe === 'week' ? weeklyData : monthlyData} margin={{ top: 4, right: 4, left: -20, bottom: 0 }}>
                 <defs>
                   <linearGradient id="colorScore" x1="0" y1="0" x2="0" y2="1">
                     <stop offset="5%" stopColor="#6366F1" stopOpacity={0.35} />
