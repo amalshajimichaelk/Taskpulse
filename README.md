@@ -144,17 +144,5 @@ Taskpulse/
                 
 ---
 
-## 📸 Screenshots
 
-| Dashboard View | Kanban Board |
-| :---: | :---: |
-| <img width="1200" alt="Dashboard Screenshot" src="https://via.placeholder.com/1200x800.png?text=TaskPulse+Dashboard+Screenshot"> | <img width="1200" alt="Kanban Screenshot" src="https://via.placeholder.com/1200x800.png?text=TaskPulse+Kanban+Screenshot"> |
-
-| Team Management | AI Insights |
-| :---: | :---: |
-| <img width="1200" alt="Team Screenshot" src="https://via.placeholder.com/1200x800.png?text=TaskPulse+Team+Screenshot"> | <img width="1200" alt="AI Insights Screenshot" src="https://via.placeholder.com/1200x800.png?text=TaskPulse+AI+Screenshot"> |
-
-*(Note: Replace the placeholder image URLs above with actual screenshots of TaskPulse by uploading them to GitHub issues/PRs and pasting the links here).*
-
----
 
