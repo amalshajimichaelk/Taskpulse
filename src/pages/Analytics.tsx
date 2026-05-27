@@ -82,10 +82,10 @@ export function Analytics() {
         startY: 50,
         head: [['Metric', 'Value']],
         body: [
-          ['Total Tasks', stats.total.toString()],
-          ['Tasks Completed', stats.completed.toString()],
-          ['Productivity Score', `${stats.productivityScore}%`],
-          ['Active Members', stats.teamSize.toString()],
+          ['Total Tasks', String(stats?.total || 0)],
+          ['Tasks Completed', String(stats?.completed || 0)],
+          ['Productivity Score', `${stats?.productivityScore || 0}%`],
+          ['Active Members', String(stats?.teamSize || 0)],
         ],
       });
       
