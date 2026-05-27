@@ -156,8 +156,3 @@ Taskpulse/
 
 ---
 
-## 👨‍💻 Team Members
-
-| Member | GitHub | Role |
-| :---: | :---: | :---: |
-| Amal Shaji Michael | <a href="https://github.com/amalshajimichaelk" target="_blank">@amalshajimichaelk</a> | Full Stack Developer |
