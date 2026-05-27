@@ -6,7 +6,7 @@ import { SkeletonChart } from "../components/ui/SkeletonLoader";
 import { Avatar } from "../components/ui/Avatar";
 import { useToast } from "../components/ui/Toast";
 import api from "../services/api";
-import jsPDF from "jspdf";
+import { jsPDF } from "jspdf";
 import autoTable from "jspdf-autotable";
 import html2canvas from "html2canvas";
 
@@ -130,9 +130,9 @@ export function Analytics() {
       
       doc.save(`TaskPulse_Analytics_${new Date().toISOString().split('T')[0]}.pdf`);
       success("Export Complete", "PDF with charts downloaded successfully.");
-    } catch (err) {
+    } catch (err: any) {
       console.error(err);
-      success("Export Failed", "There was an error generating the PDF.");
+      success("Export Failed", String(err.message || err));
     }
   };
 
